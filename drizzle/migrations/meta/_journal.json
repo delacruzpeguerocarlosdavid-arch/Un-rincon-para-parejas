@@ -1,0 +1,181 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1792756125534,
+      "tag": "0000_private_message_bank",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1792763979247,
+      "tag": "0001_profiles_and_invite_codes",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1792763997202,
+      "tag": "0002_invite_attempts_persist",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1792764794492,
+      "tag": "0003_private_correspondence_library",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1792764947431,
+      "tag": "0004_correspondence_explicit_grants_daily_schedule",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1792767792175,
+      "tag": "0005_stage3_memories_journals_dates",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1792768684607,
+      "tag": "0006_private_daily_emotions_and_moment_folder",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1792768761959,
+      "tag": "0007_emotions_explicit_read_only_grants",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1792770925895,
+      "tag": "0008_spiritual_space",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1792771048704,
+      "tag": "0009_appa_pet",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1792771229138,
+      "tag": "0010_appa_store_levels_games",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1792771629203,
+      "tag": "0011_appa_live_stats",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1792773236469,
+      "tag": "0012_appa_shared_house",
+      "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1792777503932,
+      "tag": "0013_capsules_wordsearch_safe_space",
+      "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1792777951865,
+      "tag": "0014_safe_space_lifecycle_hardening",
+      "breakpoints": true
+    },
+    {
+      "idx": 15,
+      "version": "7",
+      "when": 1792779219550,
+      "tag": "0015_shared_lily_plant",
+      "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1792779951699,
+      "tag": "0016_daily_care_ritual",
+      "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1792780290954,
+      "tag": "0017_lily_extra_care_more_games",
+      "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1792780426478,
+      "tag": "0018_appa_wardrobe",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1792782379404,
+      "tag": "0019_word_search_levels",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1792801304059,
+      "tag": "0020_fix_invites_and_pending_partner_writing",
+      "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1792864800000,
+      "tag": "0021_l_letters_and_levi_gifts",
+      "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "7",
+      "when": 1792864900000,
+      "tag": "0022_appa_living_pet_and_house",
+      "breakpoints": true
+    },
+    {
+      "idx": 23,
+      "version": "7",
+      "when": 1792865000000,
+      "tag": "0023_lily_deep_cultivation",
+      "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "7",
+      "when": 1792865100000,
+      "tag": "0024_couple_quiz_game",
+      "breakpoints": true
+    }
+  ]
+}

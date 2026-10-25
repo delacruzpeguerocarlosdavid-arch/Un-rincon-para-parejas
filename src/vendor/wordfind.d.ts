@@ -1,0 +1,2 @@
+declare const engine: { wordfind: { solve: (grid: string[][], words: string[]) => { found: { word: string; x: number; y: number; orientation: string }[]; notFound: string[] }; orientations: Record<string, (x: number, y: number, i: number) => { x: number; y: number }> } };
+export default engine;

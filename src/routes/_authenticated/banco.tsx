@@ -1,0 +1,50 @@
+import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useState, type FormEvent } from 'react';
+import { Check, X, Pencil, Trash2, CalendarDays, Plus, LogOut, Users } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { Button } from '@/components/ui/button';
+import { PageHeader } from '@/components/AppShell';
+import { bankOptions, membershipOptions, categories, dominicanDate } from '@/lib/message-bank';
+import type { Tables } from '@/integrations/supabase/types';
+export const Route = createFileRoute('/_authenticated/banco')({ head: () => ({ meta: [
+  { title: 'Banco de mensajes · Un lugar para nosotros dos' }, { name: 'description', content: 'Nuestro banco privado de mensajes y aprobaciones.' },
+  { property: 'og:title', content: 'Banco de mensajes' }, { property: 'og:description', content: 'Palabras nuestras, guardadas con amor.' }, { property: 'og:type', content: 'website' }, { name: 'twitter:card', content: 'summary' },
+] }), loader: ({ context }) => context.queryClient.ensureQueryData(membershipOptions), component: Bank });
+const tabs = ['Pendientes de aprobación', 'Aprobados', 'Programados', 'Publicados', 'Rechazados'];
+function Bank() {
+  const member = useQuery(membershipOptions); const bank = useQuery({ ...bankOptions, enabled: Boolean(member.data) });
+  const qc = useQueryClient(); const navigate = useNavigate();
+  const [tab, setTab] = useState(tabs[0]); const [content, setContent] = useState(''); const [category, setCategory] = useState('amor');
+  const [editing, setEditing] = useState<string | undefined>(); const [compose, setCompose] = useState(false); const [notice, setNotice] = useState(''); const [busy, setBusy] = useState(false);
+  const [approveNow, setApproveNow] = useState(false); 
+  const [scheduling, setScheduling] = useState<string | null>(null); const [date, setDate] = useState(''); const [deleting, setDeleting] = useState<string | null>(null);
+  const admin = member.data?.role === 'admin';
+  async function action(fn: () => PromiseLike<{ error: { message: string } | null }>) {
+    setBusy(true); setNotice('');
+    try { const { error } = await fn(); if (error) throw new Error(error.message); await Promise.all([qc.invalidateQueries({ queryKey: ['bank'] }), qc.invalidateQueries({ queryKey: ['membership'] })]); return true; }
+    catch (err) { setNotice(err instanceof Error ? err.message : 'No pudimos guardar el cambio.'); return false; } finally { setBusy(false); }
+  }
+  async function save(e: FormEvent) {
+    e.preventDefault(); const ok = await action(async () => {
+      const saved = await supabase.rpc('save_bank_message', { p_content: content, p_category: category, ...(editing ? { p_id: editing } : {}) });
+      if (saved.error || !saved.data) return saved;
+      if (admin && approveNow) return supabase.rpc('review_bank_message', { p_id: saved.data, p_approval: 'approved' });
+      return saved;
+    }); if (ok) { setCompose(false); setEditing(undefined); setContent(''); setApproveNow(false); }
+  }
+  async function signOut() { await qc.cancelQueries(); qc.clear(); await supabase.auth.signOut(); await navigate({ to: '/auth', replace: true }); }
+  function edit(m: Tables<'bank_messages'>) { setEditing(m.id); setContent(m.content); setCategory(m.category); setApproveNow(false); setCompose(true); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  const messages = bank.data?.messages.filter(m => tab === tabs[0] ? m.approval === 'pending' : tab === tabs[1] ? m.approval === 'approved' && !m.scheduled_date : tab === tabs[2] ? m.approval === 'approved' && Boolean(m.scheduled_date) : tab === tabs[4] ? m.approval === 'rejected' : false) ?? [];
+  return <div><div className="flex items-center justify-between"><span className="text-xs text-muted-foreground">{admin ? 'Administrador' : 'Nuestro espacio privado'}</span><Button variant="ghost" size="icon" title="Cerrar sesión" aria-label="Cerrar sesión" onClick={signOut}><LogOut /></Button></div><PageHeader title="Banco de mensajes" subtitle="Palabras nuestras, guardadas con amor." />
+    {member.isPending ? <p>Un momento…</p> : member.error ? <p role="alert">No pudimos comprobar tu acceso.</p> : !member.data ? <div className="space-y-3"><p>Esta cuenta todavía no está unida a nuestro espacio. Usa el código de invitación privado que te dio Carlos.</p><Button asChild><Link to="/espacio">Ingresar código</Link></Button></div> : <>
+      <Button asChild variant="outline" size="sm" className="mb-5"><Link to="/espacio"><Users />Nuestro espacio y perfil</Link></Button>
+      <Button onClick={() => { setCompose(true); setEditing(undefined); setContent(''); setCategory('amor'); setApproveNow(false); }}><Plus />Añadir mensaje</Button>
+      {compose && <form className="mt-5 space-y-4 border-b border-border pb-5" onSubmit={save}><h2 className="text-2xl">{editing ? 'Editar mensaje' : 'Un nuevo mensaje'}</h2><label className="block text-sm">Mensaje<textarea required maxLength={10000} rows={5} value={content} onChange={e => setContent(e.target.value)} className="mt-1 w-full rounded-md border border-input bg-card p-3" /></label><label className="block text-sm">Categoría<select value={category} onChange={e => setCategory(e.target.value)} className="mt-1 w-full rounded-md border border-input bg-card p-3">{categories.map(c => <option key={c}>{c}</option>)}</select></label>{admin && <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={approveNow} onChange={e => setApproveNow(e.target.checked)} />Aprobar después de guardar</label>}{editing && <p className="text-xs text-muted-foreground">El contenido modificado requiere una nueva aprobación.</p>}<div className="flex gap-2"><Button disabled={busy}>Guardar mensaje</Button><Button type="button" variant="ghost" onClick={() => setCompose(false)}>Cancelar</Button></div></form>}
+      <div className="my-5 flex flex-wrap gap-1" role="tablist" aria-label="Estados de mensajes">{tabs.map(t => <Button key={t} role="tab" aria-selected={tab === t} variant={tab === t ? 'secondary' : 'ghost'} size="sm" onClick={() => setTab(t)}>{t === tabs[0] ? 'Pendientes de aprobación' : t}</Button>)}</div>
+      {bank.isPending ? <p>Un momento…</p> : bank.error ? <div><p>No pudimos cargar los mensajes.</p><Button onClick={() => bank.refetch()} variant="ghost">Reintentar</Button></div> : tab === tabs[3] ? <ul className="space-y-3">{bank.data?.history.map(h => <li key={h.day} className="card-soft p-4"><p className="text-xs text-muted-foreground">Publicado · {h.day} · {h.author_name}</p><p className="mt-2 whitespace-pre-wrap break-words font-serif text-xl">{h.content}</p><p className="mt-2 text-xs text-muted-foreground">{h.category}</p></li>)}{!bank.data?.history.length && <p className="py-6 text-center text-sm text-muted-foreground">Aún no hay mensajes publicados.</p>}</ul> : <ul className="space-y-3">{messages.map(m => <li key={m.id} className="card-soft p-4"><p className="text-xs text-muted-foreground">{bank.data?.profiles.find(p => p.id === m.author_id)?.display_name || 'Nosotros'} · {new Date(m.created_at).toLocaleDateString('es-DO', { timeZone: 'America/Santo_Domingo' })}</p><p className="mt-2 whitespace-pre-wrap break-words font-serif text-xl leading-snug">{m.content}</p><p className="mt-3 text-xs text-muted-foreground">{m.category} · {m.approval === 'pending' ? 'Pendiente de aprobación' : m.approval === 'rejected' ? 'Rechazado' : m.scheduled_date ? `Programado · ${m.scheduled_date}` : 'Aprobado'}</p><div className="mt-3 flex flex-wrap gap-1">
+        {admin && <><Button size="sm" variant="secondary" disabled={busy} onClick={() => action(() => supabase.rpc('review_bank_message', { p_id: m.id, p_approval: 'approved' }))}><Check />Aprobar</Button><Button size="sm" variant="ghost" disabled={busy} onClick={() => action(() => supabase.rpc('review_bank_message', { p_id: m.id, p_approval: 'rejected' }))}><X />Rechazar</Button><Button variant="ghost" size="icon" title="Programar" aria-label="Programar" disabled={busy} onClick={() => { setScheduling(m.id); setDate(m.scheduled_date ?? ''); }}><CalendarDays /></Button></>}
+        {(admin || m.author_id === member.data?.user_id) && <><Button variant="ghost" size="icon" aria-label="Editar mensaje" title="Editar mensaje" onClick={() => edit(m)}><Pencil /></Button><Button variant="ghost" size="icon" aria-label="Eliminar mensaje" title="Eliminar mensaje" onClick={() => setDeleting(m.id)}><Trash2 /></Button></>}
+      </div>{scheduling === m.id && <form className="mt-3 space-y-2" onSubmit={async e => { e.preventDefault(); if (await action(() => supabase.rpc('review_bank_message', { p_id: m.id, p_approval: 'approved', p_date: date }))) setScheduling(null); }}><label className="block text-sm">Fecha en República Dominicana<input type="date" required min={dominicanDate()} value={date} onChange={e => setDate(e.target.value)} className="mt-1 w-full rounded-md border border-input bg-background p-2" /></label><Button size="sm" disabled={busy}>Aprobar y programar</Button><Button type="button" size="sm" variant="ghost" onClick={() => setScheduling(null)}>Cancelar</Button></form>}{deleting === m.id && <div className="mt-3"><p className="text-sm">¿Eliminar este mensaje? El historial publicado se conserva.</p><Button size="sm" disabled={busy} variant="destructive" onClick={async () => { if (await action(() => supabase.rpc('delete_bank_message', { p_id: m.id }))) setDeleting(null); }}>Eliminar</Button><Button size="sm" variant="ghost" onClick={() => setDeleting(null)}>Cancelar</Button></div>}</li>)}{!messages.length && <p className="py-6 text-center text-sm text-muted-foreground">Aún no hay mensajes en esta sección.</p>}</ul>}
+    </>}{notice && <p role="status" className="mt-4 break-words text-sm">{notice}</p>}</div>;
+}

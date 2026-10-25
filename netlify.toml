@@ -1,0 +1,13 @@
+[build]
+  command = "npm run build"
+  publish = ".output/public"
+
+[build.environment]
+  NODE_VERSION = "20"
+  VITE_SUPABASE_URL = "https://c--ca8d0abe-7d68-4adf-85c0-82a48618ec57-prod.lovable.cloud"
+  VITE_SUPABASE_PUBLISHABLE_KEY = "sb_publishable_bFfC-Yrw4DLPg0c9OY-t2A_oKAEaVTu"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
