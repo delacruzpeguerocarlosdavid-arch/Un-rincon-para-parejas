@@ -3,7 +3,7 @@ import { Heart, Sparkles } from 'lucide-react';
 import { useCouple } from '@/lib/couple-context';
 
 export function AccountLink() {
-  const { couple, isCustomized } = useCouple();
+  const { couple } = useCouple();
 
   return (
     <div className="mb-2 flex items-center justify-between text-xs">
@@ -20,7 +20,7 @@ export function AccountLink() {
         className="flex items-center gap-1 text-[11px] font-serif text-muted-foreground hover:text-primary transition-colors"
       >
         <Sparkles className="w-3 h-3 text-amber-500" />
-        <span>{isCustomized ? 'Ajustes' : 'Configurar'}</span>
+        <span>{couple.isCustomized ? 'Ajustes' : 'Configurar'}</span>
       </Link>
     </div>
   );

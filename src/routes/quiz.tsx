@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { PageHeader } from '@/components/AppShell';
-import { Dices, Sparkles, Heart, HelpCircle, Trophy, RefreshCw, Flame, BookOpen } from 'lucide-react';
+import { Dices, Sparkles, Heart, HelpCircle, Trophy, RefreshCw, Flame, BookOpen, ChevronRight } from 'lucide-react';
 import { useCouple } from '@/lib/couple-context';
 import { soundFx } from '@/lib/sound-atmosphere';
 import { toast } from 'sonner';
@@ -251,13 +251,5 @@ export function CoupleGamesHub() {
         </div>
       )}
     </div>
-  );
-}
-
-function ChevronRight(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" {...props}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-    </svg>
   );
 }
