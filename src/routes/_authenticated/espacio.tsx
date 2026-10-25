@@ -71,7 +71,7 @@ function Space() {
     {member.isPending ? <p>Un momento…</p> : member.error ? <p role="alert">No pudimos comprobar tu acceso: {member.error.message}</p> : !member.data ?
       <form onSubmit={redeem} className="card-soft space-y-3 p-5">
         <h2 className="flex items-center gap-2 text-2xl"><KeyRound className="h-5 w-5" />Unirme con un código</h2>
-        <p className="text-sm text-muted-foreground">Ingresa el código privado que te compartió Carlos. Solo se puede usar una vez.</p>
+        <p className="text-sm text-muted-foreground">Ingresa el código privado que te compartió tu pareja. Solo se puede usar una vez.</p>
         <input required aria-label="Código de invitación" autoComplete="off" placeholder="XXXXX-XXXXX" maxLength={20} value={code} onChange={e => setCode(e.target.value.toUpperCase())} className={`${input} text-center font-mono tracking-widest`} />
         <Button disabled={busy} className="w-full">{busy ? 'Comprobando…' : 'Unirme al espacio'}</Button>
       </form> : <>
@@ -101,11 +101,11 @@ function Space() {
       </div>
       <div className="card-soft my-5 flex items-center justify-between p-4">
         <div>
-          <h3 className="font-serif text-lg font-semibold">Regalos de honor</h3>
-          <p className="text-xs text-muted-foreground">Envía y recibe detalles especiales inspirados en Levi.</p>
+          <h3 className="font-serif text-lg font-semibold">Buzón de Amor</h3>
+          <p className="text-xs text-muted-foreground">Escribe y recibe cartas selladas con cera para guardar siempre.</p>
         </div>
         <Button asChild size="sm">
-          <Link to="/regalos">Ver regalos</Link>
+          <Link to="/mensajes">Abrir buzón</Link>
         </Button>
       </div>
       <div className="my-5">

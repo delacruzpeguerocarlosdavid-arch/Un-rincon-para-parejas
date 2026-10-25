@@ -8,7 +8,7 @@ import { PremiumPassModal } from "@/components/PremiumPassModal";
 
 const items = [
   { to: "/", label: "Inicio", icon: Home },
-  { to: "/appa", label: "Appa", icon: Sparkles },
+  { to: "/appa", label: "Mascota", icon: Sparkles },
   { to: "/quiz", label: "Juegos", icon: Dices },
   { to: "/lirio", label: "Valle", icon: Flower2 },
   { to: "/mensajes", label: "Cartas", icon: Mail },

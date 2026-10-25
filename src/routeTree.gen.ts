@@ -17,6 +17,7 @@ import { Route as MensajesRouteImport } from './routes/mensajes'
 import { Route as RecuerdosRouteImport } from './routes/recuerdos'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SentimientosRouteImport } from './routes/sentimientos'
+import { Route as QuizRouteImport } from './routes/quiz'
 import { Route as AuthenticatedAlbumRouteImport } from './routes/_authenticated/album'
 import { Route as AuthenticatedAppaRouteImport } from './routes/_authenticated/appa'
 import { Route as AuthenticatedBancoRouteImport } from './routes/_authenticated/banco'
@@ -68,6 +69,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
 const SentimientosRoute = SentimientosRouteImport.update({
   id: '/sentimientos',
   path: '/sentimientos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuizRoute = QuizRouteImport.update({
+  id: '/quiz',
+  path: '/quiz',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAlbumRoute = AuthenticatedAlbumRouteImport.update({
@@ -482,6 +488,7 @@ const rootRouteChildren: RootRouteChildren = {
   RecuerdosRoute: RecuerdosRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SentimientosRoute: SentimientosRoute,
+  QuizRoute: QuizRoute,
   ApiPublicJobsDailyMessageRoute: ApiPublicJobsDailyMessageRoute,
   ApiPublicJobsPurgeArchiveRoute: ApiPublicJobsPurgeArchiveRoute,
 }

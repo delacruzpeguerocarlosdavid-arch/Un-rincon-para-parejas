@@ -133,7 +133,7 @@ export function Index() {
         </h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {/* La casa de Appa */}
+          {/* Santuario de Mascota */}
           <Link
             to="/appa"
             className="group relative overflow-hidden rounded-2xl border border-white/60 bg-gradient-to-br from-card/90 to-amber-100/30 dark:to-amber-950/20 p-4 shadow-sm backdrop-blur-md transition-all duration-300 hover:shadow-md hover:scale-[1.02]"
@@ -144,10 +144,10 @@ export function Index() {
               </span>
               <div className="flex-1 min-w-0">
                 <span className="block font-serif text-lg font-semibold text-foreground truncate">
-                  La casa de Appa
+                  Nuestra Mascota
                 </span>
                 <span className="block text-xs text-muted-foreground truncate">
-                  Nuestra mascota: cuídalo, báñalo y juega
+                  12 adorables mascotas para criar juntos
                 </span>
               </div>
               <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:translate-x-1 transition-transform" />
@@ -165,19 +165,19 @@ export function Index() {
               </span>
               <div className="flex-1 min-w-0">
                 <span className="block font-serif text-lg font-semibold text-foreground truncate">
-                  ¿Cuánto nos conocemos?
+                  Juegos & Ruleta de Citas
                 </span>
                 <span className="block text-xs text-muted-foreground truncate">
-                  40 preguntas con respuestas secretas
+                  Momentos para reír y conectar juntos
                 </span>
               </div>
               <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:translate-x-1 transition-transform" />
             </div>
           </Link>
 
-          {/* Salón de regalos Levi */}
+          {/* Salón de detalles románticos */}
           <Link
-            to="/regalos"
+            to="/mensajes"
             className="group relative overflow-hidden rounded-2xl border border-white/60 bg-gradient-to-br from-card/90 to-emerald-100/30 dark:to-emerald-950/20 p-4 shadow-sm backdrop-blur-md transition-all duration-300 hover:shadow-md hover:scale-[1.02]"
           >
             <div className="flex items-center gap-3">
@@ -186,10 +186,10 @@ export function Index() {
               </span>
               <div className="flex-1 min-w-0">
                 <span className="block font-serif text-lg font-semibold text-foreground truncate">
-                  Regalos de honor
+                  Buzón de Cartas
                 </span>
                 <span className="block text-xs text-muted-foreground truncate">
-                  Detalles especiales inspirados en Levi
+                  Cartas selladas con cera para los dos
                 </span>
               </div>
               <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:translate-x-1 transition-transform" />

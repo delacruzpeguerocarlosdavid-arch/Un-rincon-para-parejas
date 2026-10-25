@@ -5,10 +5,11 @@ import { soundFx } from '@/lib/sound-atmosphere';
 interface ScratchDailyCardProps {
   content: string;
   category: string;
-  day: string;
+  day: string | number;
+  partnerName?: string;
 }
 
-export function ScratchDailyCard({ content, category, day }: ScratchDailyCardProps) {
+export function ScratchDailyCard({ content, category, day, partnerName }: ScratchDailyCardProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [isRevealed, setIsRevealed] = useState(false);
   const isDrawing = useRef(false);
