@@ -28,7 +28,7 @@ export const Route = createFileRoute('/_authenticated/lirio')({
       { title: 'Santuario Botánico · Un lugar para nosotros dos' },
       { name: 'description', content: 'Cultivo de lirios, campo de margaritas, río con barquitos de papel y caracola de susurros.' },
       { property: 'og:title', content: 'Santuario Botánico · Flores y Río' },
-      { property: 'og:description', content: 'Margaritas, lirios, agua viva y cartas en el río para Carlos y Mimie.' },
+      { property: 'og:description', content: 'Margaritas, lirios, agua viva y cartas en el río para dos corazones.' },
       { property: 'og:type', content: 'website' },
       { name: 'twitter:card', content: 'summary' },
     ],
@@ -51,7 +51,7 @@ const done: Record<LilyAction, string> = {
   prune: 'Ramas malas cortadas con cuidado ✂️',
   feed: 'Abono fresco: el lirio está más fuerte 🌱',
   pests: '¡Adiós bichitos! 🐞',
-  song: 'El lirio y Appa bailaron con tu canción 🎶',
+  song: 'El lirio floreció con tu canción 🎶',
   drain: 'Sustrato aireado con amor y drenaje óptimo 🪴',
 };
 
